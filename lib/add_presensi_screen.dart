@@ -59,7 +59,7 @@ class _AddPresensiState extends State<AddPresensi> {
                           ])),
                       Container(
                           alignment: Alignment.center,
-                          child: Container(
+                          child: Obx(() => Container(
                             margin: const EdgeInsets.all(16),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 4),
@@ -70,7 +70,7 @@ class _AddPresensiState extends State<AddPresensi> {
                             ),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
-                                value: value,
+                                value: addPresensi.selected.value,
                                 iconSize: 36,
                                 icon: const Icon(Icons.arrow_drop_down,
                                     color: Color(0xffd63031)),
@@ -80,7 +80,7 @@ class _AddPresensiState extends State<AddPresensi> {
                                    addPresensi.setSelected(value),
                               ),
                             ),
-                          )),
+                          ),)),
                       Container(
                         alignment: Alignment.center,
                         child: Column(children: <Widget>[
