@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:aplikasi_magang/controller/AddPresensi.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,8 @@ class AddPresensi extends StatefulWidget {
 }
 
 class _AddPresensiState extends State<AddPresensi> {
+  final AddPresensiController addPresensi =
+      Get.put(AddPresensiController());
   File image;
   Future<File> openCamera() async {
     final image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -74,7 +77,7 @@ class _AddPresensiState extends State<AddPresensi> {
                                 isExpanded: true,
                                 items: items.map(buildMenuItem).toList(),
                                 onChanged: (value) =>
-                                    setState(() => this.value = value),
+                                   addPresensi.setSelected(value),
                               ),
                             ),
                           )),
@@ -98,8 +101,7 @@ class _AddPresensiState extends State<AddPresensi> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             onPressed: () {
-                              openCamera();
-                              Navigator.pop(context);
+                             addPresensi.chooseImage();
                             },
                             child: const Text(
                               "Ambil Gambar",
@@ -116,6 +118,7 @@ class _AddPresensiState extends State<AddPresensi> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             onPressed: () {
+                            addPresensi.pressSubmit(context);
                               // profileController.pressProf(context);
                             },
                             child: const Text(
