@@ -147,6 +147,8 @@ class _RegistState extends State<Regist> {
                   height: 15,
                 ),
                 konfirmasiPasswordTextField(),
+                tanggalMulaiMagangContainer(),
+                tanggalSelesaiMagangContainer(),
                 
                 RaisedButton(
                   color: const Color(0xffd63031),
