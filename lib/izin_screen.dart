@@ -1,4 +1,6 @@
+import 'package:aplikasi_magang/controller/RiwayatIzinController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Izin extends StatefulWidget {
   
@@ -9,6 +11,8 @@ class Izin extends StatefulWidget {
 }
 
 class _IzinState extends State<Izin> {
+    final RiwayatIzinController riwayatIzinController = Get.put(RiwayatIzinController());
+
   get firebaseGreen => null;
 
   // final RiwayatSuratSkbController skbController =
@@ -25,7 +29,8 @@ class _IzinState extends State<Izin> {
         resizeToAvoidBottomInset: false,
         body: Column(children: <Widget>[
           Expanded(
-              child: ListView(children: [
+              child: Obx(() => ListView(children: [
+            for (var post in riwayatIzinController.data_array) 
             // for (var items in skbController.data_skb)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -71,7 +76,7 @@ class _IzinState extends State<Izin> {
                                                 fontFamily: "Baumans",
                                                 fontSize: 18.0,
                                               ))),
-                                  const Text("Sakit",
+                                  Text( post['keperluan'],
                                       textAlign: TextAlign.justify,
                                       style: TextStyle(
                                           color: Color(0xFF5D4037),
@@ -106,7 +111,7 @@ class _IzinState extends State<Izin> {
                     ],
                   )),
             ),
-          ]))
+          ]),))
         ]));
   }
 }

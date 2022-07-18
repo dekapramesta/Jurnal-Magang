@@ -15,7 +15,16 @@ class AddPresensiController extends GetxController {
   final selected = "".obs;
   File uploadimage;
   File file;
+  var data_items = ['Masuk','Pulang'];
   var onShow = true.obs;
+
+    @override
+  void onInit() {
+    if (selected.isEmpty){
+      selected.value = data_items[0];
+    }
+    super.onInit();
+  }
 
   void setSelected(String value) {
     selected.value = value;
