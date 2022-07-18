@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:aplikasi_magang/controller/TambahJurnalController.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddJurnal extends StatefulWidget {
   @override
@@ -31,6 +33,13 @@ class _AddJurnalState extends State<AddJurnal> {
         _dateText = "${picked.day}/${picked.month}/${picked.year}";
       });
     }
+  }
+
+  File image;
+  Future<File> openCamera() async {
+    final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    File file = File(image != null ? image.path : "");
+    return file;
   }
 
   @override
@@ -140,6 +149,38 @@ class _AddJurnalState extends State<AddJurnal> {
                                       )),
                                 ],
                               )),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Text(
+                            "Lampiran",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.all(10),
+                            child: RaisedButton(
+                              color: const Color(0xffd63031),
+                              padding: const EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 10, right: 20),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              onPressed: () {
+                                TjhController.chooseImage();
+                              },
+                              child: const Text(
+                                "Ambil Gambar Lampiran",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
                           const SizedBox(
                             height: 20,
                           ),

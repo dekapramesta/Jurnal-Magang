@@ -136,17 +136,6 @@ class _AddIzinState extends State<AddIzin> {
                                   buildUraian(),
                                 ])),
                           ),
-                          // Container(
-                          //   height: 50,
-                          //   width: double.infinity,
-                          //   decoration: BoxDecoration(
-                          //       color: Colors.grey.withOpacity(0.2),
-                          //       borderRadius: const BorderRadius.only(
-                          //           bottomRight: Radius.circular(15),
-                          //           bottomLeft: Radius.circular(15)),
-                          //       border: Border.all(
-                          //           color: Colors.grey.withOpacity(0.5))),
-                          // ),
                           const SizedBox(
                             height: 10,
                           ),
