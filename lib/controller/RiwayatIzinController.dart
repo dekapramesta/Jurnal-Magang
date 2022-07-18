@@ -4,6 +4,7 @@ import 'package:aplikasi_magang/network/api.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RiwayatIzinController extends GetxController {
@@ -30,7 +31,8 @@ class RiwayatIzinController extends GetxController {
 
     var body = json.decode(res.body);
     data_array.value = body;
-    inspect(data_array);
+    var tgl = DateTime.parse(data_array[0]['tanggal_mulai']);
+    inspect(DateFormat.yMMMEd().format(tgl));
     inspect('tes');
 
   }

@@ -2,19 +2,14 @@ import 'package:aplikasi_magang/controller/RiwayatIzinController.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi_magang/widget/herder_container.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class Izin extends StatelessWidget {
   final RiwayatIzinController riwayatIzinController =
       Get.put(RiwayatIzinController());
 
   // Tanggal List Here
-  var tanggalList = [];
-
-  // Jam List Here
-  var timeList = [];
-
-  // Image Name List Here
-  var imgList = [];
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +34,9 @@ class Izin extends StatelessWidget {
                       "https://jurnalmagang.aeritechnology.com/assets/images/lampiran_izin/${riwayatIzinController.data_array[index]['lampiran']}",
                       riwayatIzinController.data_array[index]['keperluan'],
                       // riwayatIzinController.data_array[index]['tgl_mulai'],
-                      riwayatIzinController.data_array[index]['tgl_mulai']);
+                      DateFormat.yMMMd().format(DateTime.parse(riwayatIzinController.data_array[index]['tanggal_mulai']) ) ,
+                      DateFormat.yMMMd().format(DateTime.parse(riwayatIzinController.data_array[index]['tanggal_selesai']) ), 
+                      );
                 },
                 // Card Which Holds Layout Of ListView Item
                 child: Card(
@@ -70,7 +67,7 @@ class Izin extends StatelessWidget {
                             Container(
                               width: width,
                               child: Text(
-                                " Tanggal Mulai Izin : ${riwayatIzinController.data_array[index]['tgl_mulai']}",
+                                " Tanggal Mulai Izin : ${DateFormat.yMMMd().format(DateTime.parse(riwayatIzinController.data_array[index]['tanggal_mulai']) ) }",
                                 maxLines: 3,
                                 style: TextStyle(
                                     fontSize: 15, color: Colors.grey[500]),
@@ -79,7 +76,7 @@ class Izin extends StatelessWidget {
                             Container(
                               width: width,
                               child: Text(
-                                " Tanggal Selesai Izin :  ${riwayatIzinController.data_array[index]['tgl_akhir'] != null ? riwayatIzinController.data_array[index]['jam_pulang'] : null}",
+                                " Tanggal Selesai Izin :  ${DateFormat.yMMMd().format(DateTime.parse(riwayatIzinController.data_array[index]['tanggal_selesai']) ) }",
                                 maxLines: 3,
                                 style: TextStyle(
                                     fontSize: 15, color: Colors.grey[500]),
@@ -98,7 +95,7 @@ class Izin extends StatelessWidget {
   }
 }
 
-showDialogFunc(context, img, title, desc) {
+showDialogFunc(context, img, title, tgl_mulai,tgl_selesai) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -143,7 +140,7 @@ showDialogFunc(context, img, title, desc) {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      desc,
+                      "${tgl_mulai} - ${tgl_selesai}",
                       maxLines: 3,
                       style: TextStyle(fontSize: 15, color: Colors.grey[500]),
                       textAlign: TextAlign.center,
