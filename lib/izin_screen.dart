@@ -1,117 +1,160 @@
 import 'package:aplikasi_magang/controller/RiwayatIzinController.dart';
 import 'package:flutter/material.dart';
+import 'package:aplikasi_magang/widget/herder_container.dart';
 import 'package:get/get.dart';
 
-class Izin extends StatefulWidget {
-  
-  const Izin({Key key}) : super(key: key);
+class Izin extends StatelessWidget {
+  final RiwayatIzinController riwayatIzinController =
+      Get.put(RiwayatIzinController());
 
-  @override
-  _IzinState createState() => _IzinState();
-}
+  // Tanggal List Here
+  var tanggalList = [];
 
-class _IzinState extends State<Izin> {
-    final RiwayatIzinController riwayatIzinController = Get.put(RiwayatIzinController());
+  // Jam List Here
+  var timeList = [];
 
-  get firebaseGreen => null;
-
-  // final RiwayatSuratSkbController skbController =
-  //     Get.put(RiwayatSuratSkbController());
+  // Image Name List Here
+  var imgList = [];
 
   @override
   Widget build(BuildContext context) {
+    // MediaQuery to get Device Width
+    double width = MediaQuery.of(context).size.width * 0.6;
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Riwayat Izin"),
+          title: const Text("Histori Pengajuan Izin"),
           // centerTitle: true,
           backgroundColor: const Color(0xffd63031),
         ),
-        resizeToAvoidBottomInset: false,
-        body: Column(children: <Widget>[
-          Expanded(
-              child: Obx(() => ListView(children: [
-            for (var post in riwayatIzinController.data_array) 
-            // for (var items in skbController.data_skb)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Container(
-                  width: double.infinity,
-                  height: 100,
-                  margin: const EdgeInsets.only(top: 10),
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                      color: const Color(0xFFFFFFFF),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFF5D4037))),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                              height: 35,
-                              width: 35,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage(
-                                        'assets/images/camera.png',
-                                      )))),
-                          Expanded(
-                              child: Container(
-                            margin: const EdgeInsets.only(left: 30),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width * 2,
-                                      child:
-                                          const Text("13/06/2022 - 13/06/2022 ",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                color: Color(0xFF5D4037),
-                                                fontFamily: "Baumans",
-                                                fontSize: 18.0,
-                                              ))),
-                                  Text( post['keperluan'],
-                                      textAlign: TextAlign.justify,
-                                      style: TextStyle(
-                                          color: Color(0xFF5D4037),
-                                          fontFamily: "Baumans",
-                                          fontSize: 19.0)),
-                                  // if (items['status_skb'] == "0") ...[
-                                  //   const Text('Diproses',
-                                  //       textAlign: TextAlign.justify,
-                                  //       style: TextStyle(
-                                  //           color: Color(0xFF5D4037),
-                                  //           fontFamily: "Baumans",
-                                  //           fontSize: 13.0)),
-                                  // ] else if (items['status_skb'] ==
-                                  //     "1") ...[
-                                  //   const Text('Proses',
-                                  //       textAlign: TextAlign.justify,
-                                  //       style: TextStyle(
-                                  //           color: Color(0xFF5D4037),
-                                  //           fontFamily: "Baumans",
-                                  //           fontSize: 13.0)),
-                                  // ] else ...[
-                                  //   const Text('Ditolak',
-                                  //       textAlign: TextAlign.justify,
-                                  //       style: TextStyle(
-                                  //           color: Color(0xFF5D4037),
-                                  //           fontFamily: "Baumans",
-                                  //           fontSize: 13.0)),
-                                ]),
-                          )),
-                        ],
+        // Main List View With Builder
+        body: Obx(
+          () => ListView.builder(
+            itemCount: riwayatIzinController.data_array.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  // This Will Call When User Click On ListView Item
+                  showDialogFunc(
+                      context,
+                      "https://jurnalmagang.aeritechnology.com/assets/images/lampiran_izin/${riwayatIzinController.data_array[index]['lampiran']}",
+                      riwayatIzinController.data_array[index]['keperluan'],
+                      // riwayatIzinController.data_array[index]['tgl_mulai'],
+                      riwayatIzinController.data_array[index]['tgl_mulai']);
+                },
+                // Card Which Holds Layout Of ListView Item
+                child: Card(
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: 50,
+                        height: 50,
+                        child: Image.network(
+                            "https://jurnalmagang.aeritechnology.com/assets/images/lampiran_izin/${riwayatIzinController.data_array[index]['lampiran']}"),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "${riwayatIzinController.data_array[index]['keperluan']}",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey.shade800,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: width,
+                              child: Text(
+                                " Tanggal Mulai Izin : ${riwayatIzinController.data_array[index]['tgl_mulai']}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.grey[500]),
+                              ),
+                            ),
+                            Container(
+                              width: width,
+                              child: Text(
+                                " Tanggal Selesai Izin :  ${riwayatIzinController.data_array[index]['tgl_akhir'] != null ? riwayatIzinController.data_array[index]['jam_pulang'] : null}",
+                                maxLines: 3,
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.grey[500]),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
-                  )),
-            ),
-          ]),))
-        ]));
+                  ),
+                ),
+              );
+            },
+          ),
+        ));
   }
+}
+
+showDialogFunc(context, img, title, desc) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return Center(
+        child: Material(
+          type: MaterialType.transparency,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+            ),
+            padding: EdgeInsets.all(15),
+            height: 320,
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.network(
+                    img,
+                    width: 200,
+                    height: 200,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  // width: 200,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      desc,
+                      maxLines: 3,
+                      style: TextStyle(fontSize: 15, color: Colors.grey[500]),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
