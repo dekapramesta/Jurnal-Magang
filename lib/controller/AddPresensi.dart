@@ -43,10 +43,18 @@ class AddPresensiController extends GetxController {
 
   
   Future<void> pressSubmit(context) async {
+    inspect(file);
       SharedPreferences localStorage = await SharedPreferences.getInstance();
     inspect(localStorage.getString('token'));
     Get.focusScope?.unfocus();
-    if(selected.value == "Masuk"){
+    if(file.path == ""){
+       var snackBar = new SnackBar(
+        content: Text("Foto Kosong"),
+        backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }else{
+ if(selected.value == "Masuk"){
          var request = http.MultipartRequest("POST",
         Uri.parse('https://jurnalmagang.aeritechnology.com/Api/Presensi'));
     request.fields['id_magang'] = localStorage.getString('id_magang');
@@ -74,8 +82,8 @@ class AddPresensiController extends GetxController {
         MaterialPageRoute(builder: (context) => Nav()),
       );
     } else {
-      var snackBar = const SnackBar(
-        content: Text(' gagal dikirm'),
+      var snackBar = new SnackBar(
+        content: Text(jsonDecode(responsed.body)),
         backgroundColor: Colors.red,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -108,13 +116,16 @@ class AddPresensiController extends GetxController {
         MaterialPageRoute(builder: (context) => Nav()),
       );
     } else {
-      var snackBar = const SnackBar(
-        content: Text(' gagal dikirm'),
+      
+      var snackBar = new SnackBar(
+        content: Text(jsonDecode(responsed.body)),
         backgroundColor: Colors.red,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     }
+    }
+   
   
  
   }
