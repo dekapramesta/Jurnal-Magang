@@ -3,6 +3,7 @@ import 'package:aplikasi_magang/add_izin_screen.dart';
 import 'package:aplikasi_magang/izin_screen.dart';
 import 'package:aplikasi_magang/jurnal_screen.dart';
 import 'package:aplikasi_magang/presensi_screen.dart';
+import 'package:aplikasi_magang/project_screen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -20,8 +21,8 @@ class Home extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(children: <Widget>[
             Container(
-              margin: const EdgeInsets.only(top: 180),
-              height: 500.0,
+              margin: const EdgeInsets.only(top: 130),
+              height: 550.0,
               width: 330.0,
               decoration: BoxDecoration(
                   border: Border.all(color: const Color(0xffd63031)),
@@ -29,27 +30,12 @@ class Home extends StatelessWidget {
                   color: const Color(0xFFFFFFFF)),
             )
           ])),
-      // Container(
-      //   alignment: Alignment.center,
-      //   child: Column(children: <Widget>[
-      //     Container(
-      //         margin: const EdgeInsets.only(top: 50),
-      //         height: 140.0,
-      //         width: 350.0,
-      //         decoration: BoxDecoration(
-      //             border: Border.all(color: const Color(0xFF5D4037)),
-      //             borderRadius: BorderRadius.circular(6),
-      //             color: const Color(0xFFFFFFFF)),
-      //
-      //     ),
-      //   ]),
-      // ),
       Container(
         alignment: Alignment.bottomLeft,
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 280, left: 40),
+              margin: EdgeInsets.only(top: 200, left: 40),
               height: 120.0,
               width: 120.0,
               child: InkWell(
@@ -87,7 +73,7 @@ class Home extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 460, left: 40),
+              margin: EdgeInsets.only(top: 360, left: 40),
               height: 120.0,
               width: 120.0,
               child: InkWell(
@@ -125,7 +111,7 @@ class Home extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              margin: const EdgeInsets.only(top: 280, left: 200),
+              margin: const EdgeInsets.only(top: 200, left: 200),
               height: 120.0,
               width: 120.0,
               child: InkWell(
@@ -163,7 +149,7 @@ class Home extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              margin: const EdgeInsets.only(top: 460, left: 200),
+              margin: const EdgeInsets.only(top: 360, left: 200),
               height: 120.0,
               width: 120.0,
               child: InkWell(
@@ -185,6 +171,44 @@ class Home extends StatelessWidget {
                       ),
                       const Spacer(),
                       const Text("Histori Izin",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: "Baumans",
+                              fontSize: 14.0))
+                    ]),
+                  )),
+            )
+          ],
+        ),
+      ),
+      Container(
+        alignment: Alignment.bottomLeft,
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(top: 520, left: 120),
+              height: 120.0,
+              width: 120.0,
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ProjectPage()));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xffd63031)),
+                        borderRadius: BorderRadius.circular(13),
+                        color: const Color(0xFFFFFFFF)),
+                    child: Column(children: <Widget>[
+                      const Spacer(),
+                      Image.asset(
+                        'assets/images/add.png',
+                        height: 80.0,
+                        width: 80.0,
+                      ),
+                      const Spacer(),
+                      const Text("Project",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.black,

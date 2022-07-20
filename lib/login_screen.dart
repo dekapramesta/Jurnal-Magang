@@ -1,3 +1,4 @@
+import 'package:aplikasi_magang/authentication/terms_of_use.dart';
 import 'package:aplikasi_magang/controller/LoginController.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _LoginState extends State<Login> {
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     _textInput(controller: loginController.email, hint: "Email", icon: Icons.email),
-                    _textInput(controller: loginController.password,hint: "Password", icon: Icons.vpn_key),
+                    _PasstextInput(controller: loginController.password,hint: "Password", icon: Icons.vpn_key),
                     Expanded(
                       child: Center(
                         child: ButtonWidget(
@@ -63,7 +64,9 @@ class _LoginState extends State<Login> {
                               color: Theme.of(context).accentColor),
                         ),
                       ])),
-                    )
+                    ),
+                    SizedBox(height: 20,),
+                    TermsOfUse(),
                   ],
                 ),
               ),
@@ -75,6 +78,25 @@ class _LoginState extends State<Login> {
   }
 
   Widget _textInput({controller, hint, icon}) {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        color: Colors.white,
+      ),
+      padding: EdgeInsets.only(left: 10),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: hint,
+          prefixIcon: Icon(icon),
+        ),
+      ),
+    );
+  }
+
+  Widget _PasstextInput({controller, hint, icon}) {
     return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
