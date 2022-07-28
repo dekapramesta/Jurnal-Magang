@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:aplikasi_magang/controller/ProjectController.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi_magang/widget/contact_model.dart';
 import 'package:cool_alert/cool_alert.dart';
+import 'package:get/get.dart';
 
 class ProjectPage extends StatefulWidget {
   @override
@@ -8,6 +12,8 @@ class ProjectPage extends StatefulWidget {
 }
 
 class _ProjectPageState extends State<ProjectPage> {
+    final ProjectController projectController = Get.put(ProjectController());
+
   List<ContactModel> contacts = [
     ContactModel("Aplikasi Jurnal Magang Android", "Team", false),
     ContactModel("Website Pelayanan Desa", "Team", false),
@@ -36,19 +42,20 @@ class _ProjectPageState extends State<ProjectPage> {
           child: Column(
             children: [
               Expanded(
-                child: ListView.builder(
-                    itemCount: contacts.length,
+                child:Obx(() =>  ListView.builder(
+                    itemCount: projectController.data_array.length,
                     itemBuilder: (BuildContext context, int index) {
                       // return item
                       return ContactItem(
-                        contacts[index].projectName,
-                        contacts[index].projectCategory,
-                        contacts[index].isSelected,
+                        projectController.data_array[index]['task'],
+                       int.parse( projectController.data_array[index]['on_project']),
+                        int.parse(projectController.data_array[index]['status_task']) == 0 ? false : true,
+                        int.parse(projectController.data_array[index]['id_task']),
                         index,
                       );
-                    }),
+                    })),
               ),
-              selectedContacts.length > 0
+              Obx(() => projectController.selectedList.length > 0
                   ? Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 25,
@@ -59,7 +66,7 @@ class _ProjectPageState extends State<ProjectPage> {
                         child: RaisedButton(
                           color: Color(0xffd63031),
                           child: Text(
-                            "Selesai (${selectedContacts.length})",
+                            "Selesai (${projectController.selectedList.length})",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -69,7 +76,7 @@ class _ProjectPageState extends State<ProjectPage> {
                         ),
                       ),
                     )
-                  : Container(),
+                  : Container(),)
             ],
           ),
         ),
@@ -78,7 +85,7 @@ class _ProjectPageState extends State<ProjectPage> {
   }
 
   Widget ContactItem(
-      String projectName, String projectCategory, bool isSelected, int index) {
+      String projectName, int projectCategory, bool isSelected, int checker, int index) {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Color(0xffd63031),
@@ -93,30 +100,23 @@ class _ProjectPageState extends State<ProjectPage> {
           fontWeight: FontWeight.w500,
         ),
       ),
-      subtitle: Text(projectCategory),
-      trailing: isSelected
-          ? Icon(
+      subtitle: Text(projectCategory == 0 ? "Individu":"Team" ),
+      trailing: isSelected == false
+          ? Obx(() => projectController.selectedList.contains(checker) ?  Icon(
               Icons.check_circle,
-              color: Color(0xffd63031),
-            )
-          : Icon(
-              Icons.check_circle_outline,
-              color: Colors.grey,
-            ),
+              color: Color.fromARGB(255, 211, 20, 20),
+            ) :  Icon(
+              Icons.check_circle,
+              color: Color.fromARGB(255, 175, 164, 164),
+            ),):null,
       onTap: () {
-        setState(() {
-          contacts[index].isSelected = !contacts[index].isSelected;
-          if (contacts[index].isSelected == true) {
-            selectedContacts
-                .add(ContactModel(projectName, projectCategory, true));
-          } else if (contacts[index].isSelected == false) {
-            selectedContacts.removeWhere((element) =>
-                element.projectName == contacts[index].projectCategory);
-          }
-        });
+        
+        projectController.checking_array(checker) ;
+        
       },
     );
   }
+  
 
   void confirm() {
     AlertDialog alert = AlertDialog(
@@ -124,7 +124,11 @@ class _ProjectPageState extends State<ProjectPage> {
       actions: [
         TextButton(
           child: Text('Konfirmasi'),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+projectController.submit(context);
+           Navigator.pop(context);
+
+          } ,
         ),
       ],
     );

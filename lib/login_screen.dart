@@ -105,6 +105,7 @@ class _LoginState extends State<Login> {
       ),
       padding: EdgeInsets.only(left: 10),
       child: TextFormField(
+        obscureText: true,
         controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,
